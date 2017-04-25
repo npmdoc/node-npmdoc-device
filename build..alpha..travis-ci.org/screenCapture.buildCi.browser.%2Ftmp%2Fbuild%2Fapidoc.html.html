@@ -74,15 +74,6 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.device.toString">
-            function <span class="apidocSignatureSpan">device.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-        <li>
-
             <a class="apidocElementLiA" href="#apidoc.element.device.useragent_is">
             function <span class="apidocSignatureSpan">device.</span>useragent_is
             <span class="apidocSignatureSpan">(useragent, options)</span>
@@ -98,27 +89,29 @@
 
     </ol></li>
 
-    <li class="apidocModuleLi"><a href="#apidoc.module.device.Parser">module device.Parser</a><ol>
+    <li class="apidocModuleLi"><a href="#apidoc.module.device.useragent_is">module device.useragent_is</a><ol>
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.device.Parser.Parser">
-            function <span class="apidocSignatureSpan">device.</span>Parser
+            <a class="apidocElementLiA" href="#apidoc.element.device.useragent_is.useragent_is">
+            function <span class="apidocSignatureSpan">device.</span>useragent_is
+            <span class="apidocSignatureSpan">(useragent, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.device.useragent_is.Parser">
+            function <span class="apidocSignatureSpan">device.useragent_is.</span>Parser
             <span class="apidocSignatureSpan">(user_agent, options)</span>
             </a>
 
         </li>
 
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.device.toString">module device.toString</a><ol>
-
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.device.toString.toString">
-            function <span class="apidocSignatureSpan">device.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">device.useragent_is.</span>version</span>
 
         </li>
 
@@ -253,21 +246,6 @@ ua.match(/Win( ?9|NT)/i)) {
 
 
     <h2>
-        <a href="#apidoc.element.device.toString" id="apidoc.element.device.toString">
-        function <span class="apidocSignatureSpan">device.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
         <a href="#apidoc.element.device.useragent_is" id="apidoc.element.device.useragent_is">
         function <span class="apidocSignatureSpan">device.</span>useragent_is
         <span class="apidocSignatureSpan">(useragent, options)</span>
@@ -290,7 +268,23 @@ ua.match(/Win( ?9|NT)/i)) {
 
     return device;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+var device = require('../lib/device.js'),
+assert = require('assert');
+
+describe('device', function () {
+describe('deprecated useragent_is method', function () {
+    it('should return the same', function () {
+        var mydevice = device.<span class="apidocCodeKeywordSpan">useragent_is</span>('dsfglkfjawflkehf');
+        assert.equal(mydevice.type, 'phone');
+    });
+});
+
+describe('unknown user-agent',function(){
+    it('should get phone (default one)', function(){
+        var mydevice = device('dsfglkfjawflkehf');
+...</pre></li>
     </ul>
 
 
@@ -299,12 +293,56 @@ ua.match(/Win( ?9|NT)/i)) {
 </div>
 
 <div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.device.Parser" id="apidoc.module.device.Parser">module device.Parser</a></h1>
+<h1><a href="#apidoc.module.device.useragent_is" id="apidoc.module.device.useragent_is">module device.useragent_is</a></h1>
 
 
     <h2>
-        <a href="#apidoc.element.device.Parser.Parser" id="apidoc.element.device.Parser.Parser">
-        function <span class="apidocSignatureSpan">device.</span>Parser
+        <a href="#apidoc.element.device.useragent_is.useragent_is" id="apidoc.element.device.useragent_is.useragent_is">
+        function <span class="apidocSignatureSpan">device.</span>useragent_is
+        <span class="apidocSignatureSpan">(useragent, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function parse(useragent, options) {
+    var parser = new DeviceParser(useragent, options);
+    var type = parser.get_type();
+    var model = parser.get_model();
+
+    var device = {
+        parser: parser, // to expose the device parser object to the running app
+        type: type,
+        model: model,
+        is: function (t) {
+            return type === t;
+        }
+    };
+
+    return device;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+var device = require('../lib/device.js'),
+assert = require('assert');
+
+describe('device', function () {
+describe('deprecated useragent_is method', function () {
+    it('should return the same', function () {
+        var mydevice = device.<span class="apidocCodeKeywordSpan">useragent_is</span>('dsfglkfjawflkehf');
+        assert.equal(mydevice.type, 'phone');
+    });
+});
+
+describe('unknown user-agent',function(){
+    it('should get phone (default one)', function(){
+        var mydevice = device('dsfglkfjawflkehf');
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.device.useragent_is.Parser" id="apidoc.element.device.useragent_is.Parser">
+        function <span class="apidocSignatureSpan">device.useragent_is.</span>Parser
         <span class="apidocSignatureSpan">(user_agent, options)</span>
         </a>
     </h2>
@@ -395,22 +433,6 @@ ua.match(/Win( ?9|NT)/i)) {
     </ul>
 
 
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.device.toString" id="apidoc.module.device.toString">module device.toString</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.device.toString.toString" id="apidoc.element.device.toString.toString">
-        function <span class="apidocSignatureSpan">device.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
 
 
 </div>
